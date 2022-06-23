@@ -1,13 +1,13 @@
 var LiveForm = require("./LiveForm");
 var random = require("./random");
-var grassCount = 0;
+
 
 
 
 module.exports = class Grass extends LiveForm {
     constructor(x, y) {
         super(x, y);
-        this.multiply = 0;
+        this.multiply = 8;
     }
     getNewCoordinates() {
         this.directions = [
@@ -29,8 +29,7 @@ module.exports = class Grass extends LiveForm {
         this.multiply++;
         let emptyCells = this.chooseCell(0);
         let newCell = random(emptyCells);
-        if (newCell && this.multiply >= 2) {
-            grassCount++;
+        if (newCell && this.multiply > 4) {
             let x = newCell[0];
             let y = newCell[1];
             matrix[y][x] = 1;

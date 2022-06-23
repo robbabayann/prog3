@@ -6,7 +6,7 @@ var random = require("./random.js");
 module.exports = class GrassEater extends LiveForm {
     constructor(x, y) {
         super(x, y);
-        this.life = 10;
+        this.life = 20;
     }
     getNewCoordinates() {
         this.directions = [
@@ -28,13 +28,13 @@ module.exports = class GrassEater extends LiveForm {
         let emptyCells = this.chooseCell(0);
         let newCell = random(emptyCells);
 
-        if (newCell) {
+        if (newCell && this.life > 50) {
             let x = newCell[0];
             let y = newCell[1];
             matrix[y][x] = 2;
             let grassEater = new GrassEater(x, y);
             grassEaterArr.push(grassEater);
-            this.life = 5;
+            this.life = 3;
         }
     }
     eat() {
@@ -43,7 +43,7 @@ module.exports = class GrassEater extends LiveForm {
 
         if (newCell) {
 
-            this.life++;
+            this.life+=3;
             let x = newCell[0];
             let y = newCell[1];
 
@@ -58,16 +58,26 @@ module.exports = class GrassEater extends LiveForm {
             this.x = x;
             this.y = y;
 
-            if (this.life >= 13) {
+            if (this.life > 75) {
                 this.mul();
             }
         }
         else {
             this.move()
         }
+        if (this.life < 0) {
+            this.die();
+        }
+
+        let foundCell = this.chooseCell(3)
+        let power = random(foundCell)
+
+        if (power) {
+            this.life+=5;
+        }
     }
     move() {
-        this.life--;
+        this.life-=5;
         let emptyCells = this.chooseCell(0);
         let newCell = random(emptyCells);
 
@@ -79,9 +89,7 @@ module.exports = class GrassEater extends LiveForm {
             this.y = y;
             this.x = x;
         }
-        if (this.life < 0) {
-            this.die();
-        }
+        
     }
     die() {
         matrix[this.y][this.x] = 0;

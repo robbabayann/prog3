@@ -51,7 +51,13 @@ function matrixGenerator(matrixSize, grass, grassEater, water, fire) {
     }
 
 }
-matrixGenerator(20, 40, 10, 10, 10);
+
+
+
+matrixGenerator(20, 100, 12, 50, 15);
+
+
+
 //! Creating MATRIX -- END
 
 function weather() {
@@ -133,7 +139,10 @@ function game() {
     //! Object to send
     let sendData = {
         matrix: matrix,
-        grassCounter: grassArr.length
+        grassCounter: grassArr.length,
+        grassEaterCounter: grassEaterArr.length,
+        waterCounter: waterArr.length,
+        fireCounter: fireArr.length
     }
 
     //! Send data over the socket to clients who listens "data"
@@ -142,7 +151,7 @@ function game() {
 
 
 
-setInterval(game, 1000)
+setInterval(game, 50)
 
 //// Add event
 function kill() {
@@ -166,6 +175,9 @@ var statistics = {};
 setInterval(function () {
     statistics.grass = grassArr.length;
     statistics.grassEater = grassEaterArr.length;
+    statistics.water = waterArr.length;
+    statistics.fire = fireArr.length;
+
     fs.writeFile("statistics.json", JSON.stringify(statistics), function () {
     })
 }, 1000)

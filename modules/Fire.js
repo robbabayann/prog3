@@ -25,25 +25,25 @@ module.exports = class Fire extends LiveForm {
     }
     mul() {
         let found = this.chooseCell(1);
-        let exact = random(found);
-        this.multiply++;
-        if (exact && this.multiply > 10) {
+        let exact = random(found)
+        this.multiply++
+        if (exact && this.multiply > 12) {
             let x = exact[0];
             let y = exact[1];
             let fire = new Fire(x, y);
-            matrix[y][x] = 3;
+            matrix[y][x] = 4;
             fireArr.push(fire);
             for (let i = 0; i < grassArr.length; i++) {
                 if (grassArr[i].x == x && grassArr[i].y == y) {
-                    grassArr.splice(i, 1);
+                    grassArr.splice(i, 1)
                 }
 
             }
-            this.energy++;
-            this.multiply = 0;
+            this.energy++
+            this.multiply = 0
         }
-        let foundCell = this.chooseCell(4);
-        let obsidian = random(foundCell);
+        let foundCell = this.chooseCell(3)
+        let obsidian = random(foundCell)
 
         if (this.energy < 1 || obsidian) {
             this.die();
@@ -51,7 +51,7 @@ module.exports = class Fire extends LiveForm {
     }
     eat() {
         let found = this.chooseCell(2);
-        let exact = random(found);
+        let exact = random(found)
 
         if (exact) {
             this.energy++;
@@ -60,12 +60,12 @@ module.exports = class Fire extends LiveForm {
 
             for (let i = 0; i < grassEaterArr.length; i++) {
                 if (grassEaterArr[i].x == x && grassEaterArr[i].y == y) {
-                    grassEaterArr.splice(i, 1);
+                    grassEaterArr.splice(i, 1)
                 }
             }
 
-            matrix[y][x] = 3;
-            matrix[this.y][this.x] = 0;
+            matrix[y][x] = 4
+            matrix[this.y][this.x] = 0
 
             this.x = x;
             this.y = y;
@@ -76,9 +76,9 @@ module.exports = class Fire extends LiveForm {
     die() {
         for (let i = 0; i < fireArr.length; i++) {
             if (fireArr[i].x == this.x && fireArr[i].y == this.y) {
-                fireArr.splice(i, 1);
+                fireArr.splice(i, 1)
             }
         }
-        matrix[this.y][this.x] = 0;
+        matrix[this.y][this.x] = 0
     }
 }

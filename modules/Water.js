@@ -1,5 +1,5 @@
+const Grass = require("./Grass");
 var LiveForm = require("./LiveForm");
-var Grass = require("./Grass");
 var random = require("./random");
 
 module.exports = class Water extends LiveForm {
@@ -12,7 +12,7 @@ module.exports = class Water extends LiveForm {
         let found = this.chooseCell(0);
         let exact = random(found);
 
-        if (exact && this.energy > 15) {
+        if (exact && this.energy > 7) {
             let x = exact[0];
             let y = exact[1];
             let grass = new Grass(x, y);

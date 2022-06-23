@@ -24,7 +24,11 @@ function setup() {
         //! after getting data pass it to matrix variable
         matrix = data.matrix;
         grassCountElement.innerText = data.grassCounter;
-        //! Every time it creates new Canvas woth new matrix size
+        grassEaterCountElement.innerText = data.grassEaterCounter;
+        waterCountElement.innerText = data.waterCounter;
+        fireCountElement.innerText = data.fireCounter;
+
+        //! Every time it creates new Canvas with new matrix size
         createCanvas(matrix[0].length * side, matrix.length * side)
         //! clearing background by setting it to new grey color
         background('#acacac');
@@ -40,7 +44,7 @@ function setup() {
                         }
                         else if(weath == "summer")
                         {
-                            fill("black");
+                            fill("yellow");
                         }
                         else if(weath == "winter")
                         {
@@ -48,20 +52,20 @@ function setup() {
                         }
                         else if(weath == "autumn")
                         {
-                            fill("#4dffa6")
+                            fill("orange")
                         }
                         rect(j * side, i * side, side, side);
                 } else if (matrix[i][j] == 2) {
-                    fill("orange");
+                    fill("#575757");
                     rect(j * side, i * side, side, side);
                 } else if (matrix[i][j] == 0) {
                     fill('#acacac');
                     rect(j * side, i * side, side, side);
                 } else if (matrix[i][j] == 3) {
-                    fill('red');
+                    fill('blue');
                     rect(j * side, i * side, side, side);
                 } else if (matrix[i][j] == 4) {
-                    fill('blue');
+                    fill('red');
                     rect(j * side, i * side, side, side);
                 }
             }
