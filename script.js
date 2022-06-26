@@ -9,6 +9,8 @@ function setup() {
     let grassEaterCountElement = document.getElementById('grassEaterCount');
     let waterCountElement = document.getElementById('waterCount');
     let fireCountElement = document.getElementById('fireCount');
+    let hunterCountElement = document.getElementById('hunterCount');
+
 
 
 
@@ -27,6 +29,10 @@ function setup() {
         grassEaterCountElement.innerText = data.grassEaterCounter;
         waterCountElement.innerText = data.waterCounter;
         fireCountElement.innerText = data.fireCounter;
+        hunterCountElement.innerText = data.hunterCounter;
+        wifeCountElement.innerText = data.wifeCounter;
+        houseCountElement.innerText = data.houseCounter;
+
 
         //! Every time it creates new Canvas with new matrix size
         createCanvas(matrix[0].length * side, matrix.length * side)
@@ -66,6 +72,15 @@ function setup() {
                     rect(j * side, i * side, side, side);
                 } else if (matrix[i][j] == 4) {
                     fill('red');
+                    rect(j * side, i * side, side, side);
+                } else if (matrix[i][j] == 5) {
+                    fill('coral');
+                    rect(j * side, i * side, side, side);
+                } else if (matrix[i][j] == 6) {
+                    fill('pink');
+                    rect(j * side, i * side, side, side);
+                } else if (matrix[i][j] == 7) {
+                    fill('black');
                     rect(j * side, i * side, side, side);
                 }
             }

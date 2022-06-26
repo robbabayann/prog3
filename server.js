@@ -5,6 +5,9 @@ var Grass = require("./modules/Grass.js");
 var GrassEater = require("./modules/GrassEater.js");
 var Water = require("./modules/Water.js");
 var Fire = require("./modules/Fire.js");
+var Hunter = require("./modules/Hunter.js");
+var Wife = require("./modules/Wife.js");
+var House = require("./modules/House.js");
 let random = require('./modules/random');
 let fs = require("fs")
 //! Requiring modules  --  END
@@ -15,6 +18,9 @@ grassArr = [];
 grassEaterArr = [];
 waterArr =[];
 fireArr = [];
+hunterArr = [];
+wifeArr = [];
+houseArr = [];
 matrix = [];
 //! Setting global arrays  -- END
 
@@ -22,7 +28,7 @@ matrix = [];
 
 
 //! Creating MATRIX -- START
-function matrixGenerator(matrixSize, grass, grassEater, water, fire) {
+function matrixGenerator(matrixSize, grass, grassEater, water, fire, hunter, wife, house) {
     for (let i = 0; i < matrixSize; i++) {
         matrix[i] = [];
         for (let o = 0; o < matrixSize; o++) {
@@ -49,12 +55,27 @@ function matrixGenerator(matrixSize, grass, grassEater, water, fire) {
         let customY = Math.floor(random(matrixSize));
         matrix[customY][customX] = 4;
     }
+    for (let i = 0; i < hunter; i++) {
+        let customX = Math.floor(random(matrixSize));
+        let customY = Math.floor(random(matrixSize));
+        matrix[customY][customX] = 5;
+    }
+    for (let i = 0; i < wife; i++) {
+        let customX = Math.floor(random(matrixSize));
+        let customY = Math.floor(random(matrixSize));
+        matrix[customY][customX] = 6;
+    }
+    for (let i = 0; i < house; i++) {
+        let customX = Math.floor(random(matrixSize));
+        let customY = Math.floor(random(matrixSize));
+        matrix[customY][customX] = 7;
+    }
 
 }
 
 
 
-matrixGenerator(20, 100, 12, 50, 15);
+matrixGenerator(20, 100, 12, 40, 15, 10, 10, 10);
 
 
 
@@ -106,6 +127,15 @@ function creatingObjects() {
             } else if (matrix[y][x] == 4) {
                 var fire = new Fire(x, y);
                 fireArr.push(fire);
+            } else if (matrix[y][x] == 5) {
+                var hunter = new Hunter(x, y);
+                hunterArr.push(hunter);
+            } else if (matrix[y][x] == 6) {
+                var wife = new Wife(x, y);
+                wifeArr.push(wife);
+            } else if (matrix[y][x] == 7) {
+                var house = new House(x, y);
+                houseArr.push(house);
             }
         }
     }
@@ -135,6 +165,21 @@ function game() {
             fireArr[i].mul();
         }
     }
+    if (hunterArr.length) {
+        for (var i in hunterArr) {
+            hunterArr[i].hunt();
+        }
+    }
+    if (wifeArr[0] !== undefined) {
+        for (var i in wifeArr) {
+            wifeArr[i].mul();
+        }
+    }
+    if (houseArr[0] !== undefined) {
+        for (var i in houseArr) {
+            houseArr[i].mul();
+        }
+    }
 
     //! Object to send
     let sendData = {
@@ -142,7 +187,11 @@ function game() {
         grassCounter: grassArr.length,
         grassEaterCounter: grassEaterArr.length,
         waterCounter: waterArr.length,
-        fireCounter: fireArr.length
+        fireCounter: fireArr.length,
+        hunterCounter: hunterArr.length,
+        wifeCounter: wifeArr.length,
+        houseCounter: houseArr.length
+
     }
 
     //! Send data over the socket to clients who listens "data"
@@ -159,6 +208,10 @@ function kill() {
     grassEaterArr = []
     waterArr = []
     fireArr = []
+    hunterArr = []
+    wifeArr = []
+    houseArr = []
+
     for (var y = 0; y < matrix.length; y++) {
         for (var x = 0; x < matrix[y].length; x++) {
             matrix[y][x] = 0;
@@ -177,6 +230,9 @@ setInterval(function () {
     statistics.grassEater = grassEaterArr.length;
     statistics.water = waterArr.length;
     statistics.fire = fireArr.length;
+    statistics.hunter = hunterArr.length;
+    statistics.wife = wifeArr.length;
+    statistics.house = houseArr.length;
 
     fs.writeFile("statistics.json", JSON.stringify(statistics), function () {
     })
